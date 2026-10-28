@@ -52,8 +52,33 @@
   document.getElementById("year").textContent = new Date().getFullYear();
 })();
 
-// Hero video: respect reduced motion
+// Hero videos: crossfade between the clips, mobile gets smaller files
 (() => {
-  const v = document.querySelector(".hero__bg");
-  if (v && window.matchMedia("(prefers-reduced-motion: reduce)").matches) { v.removeAttribute("autoplay"); v.pause(); }
+  const videos = [...document.querySelectorAll(".hero__bg")];
+  if (!videos.length) return;
+  const mobile = window.matchMedia("(max-width: 860px)").matches;
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  videos.forEach((v) => { v.src = mobile ? v.dataset.srcMobile : v.dataset.src; });
+  if (reduced) return; // first clip's poster stays as a still image
+
+  let i = 0;
+  const play = (v) => { v.currentTime = 0; const p = v.play(); if (p) p.catch(() => {}); };
+  const next = () => {
+    const cur = videos[i];
+    i = (i + 1) % videos.length;
+    const nxt = videos[i];
+    play(nxt);
+    nxt.classList.add("is-active");
+    cur.classList.remove("is-active");
+  };
+  videos.forEach((v) => v.addEventListener("ended", () => { if (v === videos[i]) next(); }));
+  // Start the next clip slightly before the current ends so the fade overlaps
+  videos.forEach((v) => v.addEventListener("timeupdate", () => {
+    if (v === videos[i] && v.duration && v.duration - v.currentTime < 1.2 && !v.dataset.fading) {
+      v.dataset.fading = "1";
+      next();
+      setTimeout(() => { delete v.dataset.fading; }, 2000);
+    }
+  }));
+  play(videos[0]);
 })();
