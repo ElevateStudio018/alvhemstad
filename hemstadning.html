@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hemstädning i Ale – fast pris och samma städare varje gång</title>
+  <meta name="description" content="Regelbunden hemstädning på abonnemang i Ale. 230 kr/h inkl. moms efter RUT, samma städare vid alla tillfällen och nöjd kund-garanti.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="assets/img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Jost:wght@400;500;600&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="index.html" class="header__logo" aria-label="Alvhem Städ – till startsidan">
+      <img src="assets/img/logo.png" alt="Alvhem Städ" width="640" height="388">
+    </a>
+    <nav class="header__nav" aria-label="Huvudmeny">
+      <a href="index.html">Hem</a>
+      <a href="index.html#kontakt">Boka nu</a>
+      <div class="dropdown">
+        <a href="index.html#tjanster" class="dropdown__toggle is-active" aria-haspopup="true">Våra tjänster</a>
+        <div class="dropdown__menu">
+          <a href="hemstadning.html" aria-current="page">Hemstädning</a>
+          <a href="storstadning.html">Storstädning</a>
+          <a href="flyttstadning.html">Flyttstädning</a>
+          <a href="kontorsstadning.html">Kontorsstädning</a>
+          <a href="fonsterputsning-tradgard.html">Fönsterputs &amp; trädgård</a>
+        </div>
+      </div>
+      <a href="index.html#kontakt">Kontakta oss</a>
+    </nav>
+    <button class="header__toggle" id="navToggle" aria-label="Öppna meny" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="header__mobile" id="mobileMenu" aria-label="Mobilmeny" hidden>
+    <a href="index.html">Hem</a>
+    <a href="index.html#kontakt">Boka nu</a>
+    <a href="index.html#tjanster">Våra tjänster</a>
+    <a href="hemstadning.html" class="sub">Hemstädning</a>
+    <a href="storstadning.html" class="sub">Storstädning</a>
+    <a href="flyttstadning.html" class="sub">Flyttstädning</a>
+    <a href="kontorsstadning.html" class="sub">Kontorsstädning</a>
+    <a href="fonsterputsning-tradgard.html" class="sub">Fönsterputs &amp; trädgård</a>
+    <a href="index.html#kontakt">Kontakta oss</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="page-hero">
+    <img class="page-hero__bg" src="assets/img/hem.jpg" alt="">
+    <div class="container page-hero__content">
+      <nav class="crumbs" aria-label="Brödsmulor"><a href="index.html">Hem</a><span>/</span><a href="index.html#tjanster">Tjänster</a><span>/</span><span aria-current="page">Hemstädning</span></nav>
+      <h1 class="display">Hemstädning</h1>
+      <p class="page-hero__lead">Kom hem till ett rent och fräscht hem – varje vecka, varannan vecka eller var fjärde vecka. Vi sköter städningen så att du får mer tid till det som betyder något.</p>
+      <div class="page-hero__actions">
+        <a href="index.html?tjanst=Hemstädning#kontakt" class="btn btn--white">Boka kostnadsfritt uppstartsmöte</a>
+        <a href="tel:+46760223990" class="btn btn--outline">Ring 076 022 39 90</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="svc-intro">
+    <div class="container svc-intro__grid">
+      <div class="svc-intro__text">
+        <p class="kicker">Hemstädning</p>
+        <h2 class="h2">Så funkar det</h2>
+          <p>Med hemstädning på abonnemang får du ett hem som alltid känns välskött. Du väljer hur ofta vi kommer, och du får samma städare vid varje tillfälle – någon som lär känna ditt hem och hur du vill ha det.</p>
+          <p>Vi börjar alltid med ett kostnadsfritt uppstartsmöte där vi går igenom ditt hem, dina önskemål och vad som är viktigast för dig. Därefter vet du exakt vad som ingår och vad det kostar.</p>
+        <dl class="facts">
+            <div><dt>Frekvens</dt><dd>Varje, varannan eller var fjärde vecka</dd></div>
+            <div><dt>Bindningstid</dt><dd>En månad</dd></div>
+            <div><dt>Rengöringsmedel</dt><dd>Kan ingå för 60 kr/tillfälle</dd></div>
+            <div><dt>Avbokning</dt><dd>Kostnadsfritt 2 arbetsdagar innan</dd></div>
+        </dl>
+      </div>
+      <aside class="price-card" aria-label="Pris">
+        <p class="price-card__label">Pris</p>
+        <p class="price-card__price">230 kr<small>/timme</small></p>
+        <p class="price-card__note">Fast pris inkl. moms, efter 50 % RUT-avdrag.</p>
+        <a href="index.html?tjanst=Hemstädning#kontakt" class="btn btn--brand btn--block">Boka uppstartsmöte</a>
+        <ul class="price-card__list">
+          <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Kostnadsfritt uppstartsmöte</span></li>
+          <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Nöjd kund-garanti</span></li>
+          <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Samma städare varje gång</span></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="includes">
+    <div class="container">
+      <h2 class="h2">Det här ingår</h2>
+      <p class="includes__lead">Exempel på vad som ingår. Det exakta upplägget anpassar vi efter dina önskemål på uppstartsmötet.</p>
+      <div class="includes__grid">
+          <div class="includes__group">
+            <h3>Alla rum</h3>
+            <ul>
+              <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Dammsugning och våttorkning av golv</span></li>
+              <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Damning av fria ytor, fönsterbänkar och lister</span></li>
+              <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Avtorkning av handtag och strömbrytare</span></li>
+              <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Tömning av papperskorgar</span></li>
+            </ul>
+          </div>
+          <div class="includes__group">
+            <h3>Kök</h3>
+            <ul>
+              <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Avtorkning av bänkar och kakel ovanför bänk</span></li>
+              <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Spis och mikrovågsugn utvändigt</span></li>
+              <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Diskho och blandare</span></li>
+              <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Avtorkning av skåpluckor vid behov</span></li>
+            </ul>
+          </div>
+          <div class="includes__group">
+            <h3>Badrum</h3>
+            <ul>
+              <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Toalett, handfat och blandare</span></li>
+              <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Dusch, badkar och kakel i duschzon</span></li>
+              <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Speglar och glasytor</span></li>
+              <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Golv och golvbrunn</span></li>
+            </ul>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="steps">
+    <div class="container">
+      <h2 class="h2">Tre steg till ett rent hem</h2>
+      <ol class="steps__list">
+        <li><span class="steps__num">01</span><h3>Kontakta oss</h3><p>Ring, mejla eller fyll i formuläret så hör vi av oss.</p></li>
+        <li><span class="steps__num">02</span><h3>Uppstartsmöte</h3><p>Vi går igenom dina behov – helt kostnadsfritt.</p></li>
+        <li><span class="steps__num">03</span><h3>Vi städar</h3><p>Samma städare, fast pris och RUT direkt på fakturan.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="svc-faq">
+    <div class="container svc-faq__grid">
+      <h2 class="h2">Vanliga frågor</h2>
+      <div class="faq">
+        <details class="faq__item" open>
+          <summary>Hur ofta kan ni komma?</summary>
+          <p>Du väljer själv: varje vecka, varannan vecka eller var fjärde vecka. Frekvensen kan justeras efter dina behov.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Får jag samma städare varje gång?</summary>
+          <p>Ja. Du får samma städare vid alla städtillfällen.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Finns det bindningstid?</summary>
+          <p>Hemstädning på abonnemang har en månads bindningstid.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Tar ni med rengöringsmedel?</summary>
+          <p>Ja, om du vill. Då debiteras 60 kr inklusive moms per städtillfälle.</p>
+        </details>
+        <details class="faq__item">
+          <summary>Hur avbokar jag?</summary>
+          <p>Du kan avboka ett städtillfälle kostnadsfritt senast 2 arbetsdagar i förväg.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="others">
+    <div class="container">
+      <h2 class="h2">Fler tjänster</h2>
+      <div class="others__grid">
+        <a class="other" href="storstadning.html">
+          <img src="assets/img/stor.jpg" alt="" loading="lazy">
+          <span>Storstädning</span>
+        </a>
+        <a class="other" href="flyttstadning.html">
+          <img src="assets/img/flytt.jpg" alt="" loading="lazy">
+          <span>Flyttstädning</span>
+        </a>
+        <a class="other" href="kontorsstadning.html">
+          <img src="assets/img/kontor.jpg" alt="" loading="lazy">
+          <span>Kontorsstädning</span>
+        </a>
+        <a class="other" href="fonsterputsning-tradgard.html">
+          <img src="assets/img/hero-fonster-poster.jpg" alt="" loading="lazy">
+          <span>Fönsterputs &amp; trädgård</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container cta-band__inner">
+      <h2 class="display display--sm">Redo för ett skinande rent hem?</h2>
+      <div class="cta-band__actions">
+        <a href="index.html?tjanst=Hemstädning#kontakt" class="btn btn--white">Boka uppstartsmöte</a>
+        <a href="tel:+46760223990" class="btn btn--outline">076 022 39 90</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <img src="assets/img/logo.png" alt="Alvhem Städ" class="footer__logo" width="640" height="388" loading="lazy">
+    <div class="footer__links">
+      <a href="hemstadning.html">Hemstädning</a>
+      <a href="storstadning.html">Storstädning</a>
+      <a href="flyttstadning.html">Flyttstädning</a>
+      <a href="kontorsstadning.html">Kontorsstädning</a>
+      <a href="fonsterputsning-tradgard.html">Fönsterputs &amp; trädgård</a>
+    </div>
+    <p>Alvhem Städ AB<br>Näckens väg 23, 446 34 Älvängen<br>Telefon: <a href="tel:+46760223990">076 022 39 90</a><br>Mail: <a href="mailto:info@alvhemstad.se">info@alvhemstad.se</a></p>
+  </div>
+  <p class="footer__copy">© <span id="year">2026</span> Alvhem Städ AB · Priser för privatpersoner inkl. moms och efter RUT-avdrag</p>
+</footer>
+
+<script src="main.js" defer></script>
+</body>
+</html>

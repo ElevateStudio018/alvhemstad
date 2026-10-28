@@ -22,7 +22,16 @@
   // Contact form — opens the visitor's mail client with a prefilled message
   const form = document.getElementById("contactForm");
   const status = document.getElementById("formStatus");
-  form.addEventListener("submit", (e) => {
+
+  // Preselect service when arriving from a service page, e.g. index.html?tjanst=Flyttstädning#kontakt
+  const wanted = new URLSearchParams(location.search).get("tjanst");
+  const select = document.getElementById("f-type");
+  if (wanted && select) {
+    const opt = [...select.options].find((o) => o.value === wanted);
+    if (opt) select.value = opt.value;
+  }
+
+  if (form) form.addEventListener("submit", (e) => {
     e.preventDefault();
     let ok = true;
     ["f-name", "f-email"].forEach((id) => {

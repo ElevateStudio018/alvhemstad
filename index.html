@@ -9,7 +9,7 @@
   <link rel="icon" href="assets/img/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Jost:wght@400;500;600&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
   {
@@ -25,28 +25,44 @@
 </head>
 <body>
 
+<!-- HEADER:START -->
 <header class="header" id="header">
   <div class="header__inner">
-    <a href="#top" class="header__logo" aria-label="Alvhem Städ – till startsidan">
+    <a href="index.html" class="header__logo" aria-label="Alvhem Städ – till startsidan">
       <img src="assets/img/logo.png" alt="Alvhem Städ" width="640" height="388">
     </a>
     <nav class="header__nav" aria-label="Huvudmeny">
-      <a href="#top" class="is-active">Hem</a>
-      <a href="#kontakt">Boka nu</a>
-      <a href="#tjanster">Våra tjänster</a>
-      <a href="#kontakt">Kontakta oss</a>
+      <a href="index.html" class="is-active">Hem</a>
+      <a href="index.html#kontakt">Boka nu</a>
+      <div class="dropdown">
+        <a href="index.html#tjanster" class="dropdown__toggle" aria-haspopup="true">Våra tjänster</a>
+        <div class="dropdown__menu">
+          <a href="hemstadning.html">Hemstädning</a>
+          <a href="storstadning.html">Storstädning</a>
+          <a href="flyttstadning.html">Flyttstädning</a>
+          <a href="kontorsstadning.html">Kontorsstädning</a>
+          <a href="fonsterputsning-tradgard.html">Fönsterputs &amp; trädgård</a>
+        </div>
+      </div>
+      <a href="index.html#kontakt">Kontakta oss</a>
     </nav>
     <button class="header__toggle" id="navToggle" aria-label="Öppna meny" aria-expanded="false" aria-controls="mobileMenu">
       <span></span><span></span><span></span>
     </button>
   </div>
   <nav class="header__mobile" id="mobileMenu" aria-label="Mobilmeny" hidden>
-    <a href="#top">Hem</a>
-    <a href="#kontakt">Boka nu</a>
-    <a href="#tjanster">Våra tjänster</a>
-    <a href="#kontakt">Kontakta oss</a>
+    <a href="index.html">Hem</a>
+    <a href="index.html#kontakt">Boka nu</a>
+    <a href="index.html#tjanster">Våra tjänster</a>
+    <a href="hemstadning.html" class="sub">Hemstädning</a>
+    <a href="storstadning.html" class="sub">Storstädning</a>
+    <a href="flyttstadning.html" class="sub">Flyttstädning</a>
+    <a href="kontorsstadning.html" class="sub">Kontorsstädning</a>
+    <a href="fonsterputsning-tradgard.html" class="sub">Fönsterputs &amp; trädgård</a>
+    <a href="index.html#kontakt">Kontakta oss</a>
   </nav>
 </header>
+<!-- HEADER:END -->
 
 <main id="top">
 
@@ -59,7 +75,7 @@
         data-src="assets/video/hero-torka.mp4" data-src-mobile="assets/video/hero-torka-mobil.mp4"></video>
     </div>
     <div class="container hero__content">
-      <h1 class="hero__title">Skinande rent.<br>Varje gång.</h1>
+      <h1 class="hero__title display">Skinande rent.<br><em>Varje gång.</em></h1>
       <p class="hero__lead">Hemstädning, storstädning, flyttstädning och kontorsstädning i Ale – till fast pris, med samma städare varje gång och 50&nbsp;% RUT-avdrag direkt på fakturan.</p>
       <a href="#kontakt" class="btn btn--white">Boka uppstartsmöte</a>
     </div>
@@ -95,32 +111,40 @@
 
   <!-- VARFÖR -->
   <section class="why">
-    <div class="container">
-      <h2 class="h2">Därför väljer kunderna Alvhem</h2>
-      <p class="why__lead">Vi gör det enkelt att få ett rent hem. Tydliga priser, samma städare från gång till gång och garanti på allt vi gör.</p>
-      <div class="why__grid">
-        <div class="why__item">
-          <span class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          </span>
-          <h3>Fasta priser</h3>
-          <p>Hemstädning för 230 kr/h inklusive moms, efter RUT-avdrag.</p>
+    <div class="container why__grid">
+      <div class="why__intro">
+        <p class="kicker kicker--light">Därför Alvhem</p>
+        <h2 class="display display--sm">Ett städföretag du kan lita på – <em>från första mötet.</em></h2>
+        <p class="why__lead">Tydliga priser, samma städare från gång till gång och garanti på allt vi gör. Så enkelt ska det vara att få ett rent hem.</p>
+        <img src="assets/img/guldsigill-2024.png" alt="Certifierad kvalitetspartner 2024" class="why__seal" width="480" height="260" loading="lazy">
+      </div>
+      <div class="why__stats">
+        <div class="stat">
+          <p class="stat__num">230<small> kr</small></p>
+          <h3>Fast timpris</h3>
+          <p>För hemstädning, inklusive moms och efter RUT-avdrag. Inga överraskningar på fakturan.</p>
         </div>
-        <div class="why__item">
-          <span class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-          <h3>Nöjd kund-garanti</h3>
-          <p>Kvalitetsgaranti på alla våra tjänster.</p>
+        <div class="stat">
+          <p class="stat__num">50<small> %</small></p>
+          <h3>RUT direkt</h3>
+          <p>RUT-avdraget dras direkt på fakturan – du behöver inte göra något själv.</p>
         </div>
-        <div class="why__item">
-          <span class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          </span>
+        <div class="stat">
+          <p class="stat__num">1</p>
           <h3>Samma städare</h3>
-          <p>Du får samma städare vid alla städtillfällen.</p>
+          <p>Du får samma städare vid alla tillfällen, som lär känna ditt hem.</p>
+        </div>
+        <div class="stat">
+          <p class="stat__num">0<small> kr</small></p>
+          <h3>Uppstartsmöte</h3>
+          <p>Vi börjar alltid med ett kostnadsfritt möte där vi anpassar städningen efter dig.</p>
         </div>
       </div>
+      <ul class="why__promises">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Nöjd kund-garanti</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Kvalitetsgaranti på alla tjänster</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Kostnadsfri avbokning 2 arbetsdagar innan</li>
+      </ul>
     </div>
   </section>
 
@@ -133,41 +157,45 @@
         <article class="card">
           <img src="assets/img/hem.jpg" alt="Välstädat vardagsrum" loading="lazy">
           <div class="card__body">
-            <h3>Hemstädning</h3>
+            <h3><a href="hemstadning.html" class="card__link">Hemstädning</a></h3>
             <p>Regelbunden städning på abonnemang – varje vecka, varannan vecka eller var fjärde vecka.</p>
             <p class="card__price">230 kr/timme</p>
             <p class="card__note">Fast pris inkl. moms, efter RUT-avdrag</p>
+            <span class="card__more">Läs mer →</span>
           </div>
         </article>
         <article class="card">
           <img src="assets/img/stor.jpg" alt="Dammsugning av matta" loading="lazy">
           <div class="card__body">
-            <h3>Storstädning</h3>
+            <h3><a href="storstadning.html" class="card__link">Storstädning</a></h3>
             <p>Ett grundligt städtillfälle som får bostaden att kännas som ny, till exempel inför högtider eller gäster.</p>
             <p class="card__price">från 250 kr/timme</p>
             <p class="card__note">Inkl. moms, efter RUT. Abonnemangskunder betalar sitt vanliga pris.</p>
+            <span class="card__more">Läs mer →</span>
           </div>
         </article>
         <article class="card">
           <img src="assets/img/flytt.jpg" alt="Ljust, tomt rum" loading="lazy">
           <div class="card__body">
-            <h3>Flyttstädning</h3>
+            <h3><a href="flyttstadning.html" class="card__link">Flyttstädning</a></h3>
             <p>Snabbt och professionellt, med flyttstädningens särskilda krav uppfyllda och kvalitetsgaranti.</p>
             <p class="card__price">från 40 kr/kvm</p>
             <p class="card__note">Inkl. moms, efter RUT-avdrag</p>
+            <span class="card__more">Läs mer →</span>
           </div>
         </article>
         <article class="card">
           <img src="assets/img/kontor.jpg" alt="Ljust kontor" loading="lazy">
           <div class="card__body">
-            <h3>Kontorsstädning</h3>
+            <h3><a href="kontorsstadning.html" class="card__link">Kontorsstädning</a></h3>
             <p>En ren och trivsam arbetsmiljö. Frekvens och omfattning efter era önskemål.</p>
             <p class="card__price">från 350 kr/timme</p>
             <p class="card__note">Exkl. moms första månaden, därefter fast pris per tillfälle</p>
+            <span class="card__more">Läs mer →</span>
           </div>
         </article>
       </div>
-      <p class="services__extra">Nu även <strong>fönsterputsning</strong> och <strong>trädgårdsarbete</strong> – hör av dig!</p>
+      <p class="services__extra">Nu även <a href="fonsterputsning-tradgard.html"><strong>fönsterputsning</strong> och <strong>trädgårdsarbete</strong> →</a></p>
       <ul class="terms">
         <li>Hemstädning på abonnemang har en månads bindningstid.</li>
         <li>Rengöringsmedel kan ingå vid hemstädning för 60 kr inkl. moms per tillfälle.</li>
@@ -230,14 +258,22 @@
 
 </main>
 
+<!-- FOOTER:START -->
 <footer class="footer">
   <div class="container footer__grid">
     <img src="assets/img/logo.png" alt="Alvhem Städ" class="footer__logo" width="640" height="388" loading="lazy">
-    <p>Alvhem Städ AB<br>Näckens väg 23<br>446 34 Älvängen</p>
-    <p>Telefon: <a href="tel:+46760223990">076 022 39 90</a><br>Mail: <a href="mailto:info@alvhemstad.se">info@alvhemstad.se</a></p>
+    <div class="footer__links">
+      <a href="hemstadning.html">Hemstädning</a>
+      <a href="storstadning.html">Storstädning</a>
+      <a href="flyttstadning.html">Flyttstädning</a>
+      <a href="kontorsstadning.html">Kontorsstädning</a>
+      <a href="fonsterputsning-tradgard.html">Fönsterputs &amp; trädgård</a>
+    </div>
+    <p>Alvhem Städ AB<br>Näckens väg 23, 446 34 Älvängen<br>Telefon: <a href="tel:+46760223990">076 022 39 90</a><br>Mail: <a href="mailto:info@alvhemstad.se">info@alvhemstad.se</a></p>
   </div>
   <p class="footer__copy">© <span id="year">2026</span> Alvhem Städ AB · Priser för privatpersoner inkl. moms och efter RUT-avdrag</p>
 </footer>
+<!-- FOOTER:END -->
 
 <script src="main.js" defer></script>
 </body>

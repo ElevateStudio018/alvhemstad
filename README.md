@@ -8,3 +8,9 @@ Statisk, modern webbplats för Alvhem Städ AB baserad på innehållet från alv
 - `assets/img/` – logotyp, Guldsigill och foton (Unsplash, fri licens)
 
 Öppna `index.html` direkt i webbläsaren eller publicera mappen på valfri statisk hosting (Netlify, Vercel, GitHub Pages).
+
+## Tjänstesidor
+
+Tjänstesidorna (`hemstadning.html`, `storstadning.html`, `flyttstadning.html`, `kontorsstadning.html`, `fonsterputsning-tradgard.html`) genereras från `tools/build_pages.py`, som också uppdaterar menyn och sidfoten i `index.html`. Ändra texter och priser i skriptet och kör:
+
+    python3 tools/build_pages.py
