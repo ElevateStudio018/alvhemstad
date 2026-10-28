@@ -58,11 +58,17 @@
   if (!videos.length) return;
   const mobile = window.matchMedia("(max-width: 860px)").matches;
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  videos.forEach((v) => { v.src = mobile ? v.dataset.srcMobile : v.dataset.src; });
+  const load = (v) => { if (!v.src) { v.src = mobile ? v.dataset.srcMobile : v.dataset.src; v.load(); } };
+  load(videos[0]);
   if (reduced) return; // first clip's poster stays as a still image
 
+  // Fetch the following clips only once the first one is playing, so they don't compete for bandwidth
+  videos[0].addEventListener("playing", () => {
+    setTimeout(() => videos.slice(1).forEach((v) => { v.preload = "auto"; load(v); }), 1500);
+  }, { once: true });
+
   let i = 0;
-  const play = (v) => { v.currentTime = 0; const p = v.play(); if (p) p.catch(() => {}); };
+  const play = (v) => { load(v); v.currentTime = 0; const p = v.play(); if (p) p.catch(() => {}); };
   const next = () => {
     const cur = videos[i];
     i = (i + 1) % videos.length;
