@@ -51,3 +51,9 @@
 
   document.getElementById("year").textContent = new Date().getFullYear();
 })();
+
+// Hero video: respect reduced motion
+(() => {
+  const v = document.querySelector(".hero__bg");
+  if (v && window.matchMedia("(prefers-reduced-motion: reduce)").matches) { v.removeAttribute("autoplay"); v.pause(); }
+})();
