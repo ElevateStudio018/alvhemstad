@@ -33,9 +33,10 @@ IMAGE_WIDTHS = {
 
 # Vanliga frågor på startsidan (visas på sidan och som FAQPage-data för Google och AI-sök)
 HOME_FAQ = [
-    ("Vad kostar hemstädning hos Alvhem Städ?", "Hemstädning kostar 230 kr per timme inklusive moms efter RUT-avdrag. Vi har fasta priser, så du vet alltid vad du betalar."),
+    ("Vad kostar hemstädning hos Alvhem Städ?", "Hemstädning kostar 249 kr per timme inklusive moms efter RUT-avdrag. Vi har fasta priser, så du vet alltid vad du betalar."),
     ("Hur fungerar RUT-avdraget?", "Du får 50 % RUT-avdrag direkt på fakturan för hemstädning, storstädning och flyttstädning. Alla priser för privatpersoner anges inklusive moms och efter RUT-avdrag."),
     ("Vilka tjänster erbjuder ni?", "Hemstädning, storstädning, flyttstädning och kontorsstädning. Vi erbjuder nu även fönsterputsning och trädgårdsarbete."),
+    ("Vad kostar fönsterputs och trädgårdsarbete?", "Fönsterputsning och trädgårdsarbete kostar 299 kr per timme inklusive moms efter RUT-avdrag."),
     ("Var finns Alvhem Städ?", "Vi finns på Näckens väg 23 i Älvängen i Ale kommun. Kontakta oss så berättar vi om vi kan hjälpa dig där du bor."),
     ("Hur kommer jag igång?", "Vi börjar alltid med ett kostnadsfritt uppstartsmöte där vi anpassar städningen efter dina behov. Ring 076 022 39 90 eller mejla info@alvhemstad.se."),
     ("Får jag samma städare varje gång?", "Ja. Du får samma städare vid alla städtillfällen."),
@@ -51,10 +52,10 @@ SERVICES = [
         "image": "assets/img/hem.jpg",
         "image_alt": "Välstädat vardagsrum i dagsljus",
         "title": "Hemstädning i Ale – fast pris och samma städare varje gång",
-        "description": "Regelbunden hemstädning på abonnemang i Ale. 230 kr/h inkl. moms efter RUT, samma städare vid alla tillfällen och nöjd kund-garanti.",
+        "description": "Regelbunden hemstädning på abonnemang i Ale. 249 kr/h inkl. moms efter RUT, samma städare vid alla tillfällen och nöjd kund-garanti.",
         "headline": "Hemstädning",
         "lead": "Kom hem till ett rent och fräscht hem – varje vecka, varannan vecka eller var fjärde vecka. Vi sköter städningen så att du får mer tid till det som betyder något.",
-        "price": "230 kr",
+        "price": "249 kr",
         "price_unit": "/timme",
         "price_from": False,
         "price_note": "Fast pris inkl. moms, efter 50 % RUT-avdrag.",
@@ -87,11 +88,11 @@ SERVICES = [
         "form_value": "Storstädning",
         "image": "assets/img/stor.jpg",
         "image_alt": "Dammsugning av matta",
-        "title": "Storstädning i Ale – grundlig städning från 250 kr/h",
-        "description": "Storstädning i Ale som får bostaden att kännas som ny. Från 250 kr/h inkl. moms efter RUT, med kvalitetsgaranti.",
+        "title": "Storstädning i Ale – grundlig städning från 275 kr/h",
+        "description": "Storstädning i Ale som får bostaden att kännas som ny. Från 275 kr/h inkl. moms efter RUT, med kvalitetsgaranti.",
         "headline": "Storstädning",
         "lead": "Ett riktigt grundligt städtillfälle som får bostaden att kännas som ny – inför långhelger, gäster, högtider eller bara när det är dags.",
-        "price": "250 kr",
+        "price": "275 kr",
         "price_unit": "/timme",
         "price_from": True,
         "price_note": "Inkl. moms, efter 50 % RUT-avdrag. Abonnemangskunder betalar sitt vanliga timpris.",
@@ -111,7 +112,7 @@ SERVICES = [
             ("Badrum", ["Avkalkning av kakel och glasytor", "Rengöring av golvbrunn", "Badkarsfront och bakom toalett", "Skåp och hyllor"]),
         ],
         "faq": [
-            ("Vad kostar en storstädning?", "Från 250 kr per timme inklusive moms efter RUT-avdrag. Abonnemangskunder betalar sitt vanliga pris."),
+            ("Vad kostar en storstädning?", "Från 275 kr per timme inklusive moms efter RUT-avdrag. Abonnemangskunder betalar sitt vanliga pris."),
             ("Hur lång tid tar det?", "Det beror på bostadens storlek och skick. På uppstartsmötet går vi igenom vad som ska göras och ger dig en tydlig uppskattning."),
             ("Måste jag vara hemma?", "Nej, det bestämmer du. Vi kommer överens om nycklar och tillträde innan."),
             ("Hur avbokar jag?", "Du kan avboka kostnadsfritt senast 2 arbetsdagar i förväg."),
@@ -148,7 +149,7 @@ SERVICES = [
         ],
         "faq": [
             ("Vad kostar flyttstädning?", "Från 40 kr per kvadratmeter inklusive moms efter RUT-avdrag. Exakt pris beror på bostadens storlek och skick."),
-            ("Ingår fönsterputsning?", "Fönsterputsning kan läggas till. Berätta när du bokar så tar vi med det i offerten."),
+            ("Ingår fönsterputsning?", "Fönsterputsning kan läggas till för 299 kr per timme inklusive moms efter RUT-avdrag. Berätta när du bokar."),
             ("Vad händer om något missats?", "Alla flyttstädningar har kvalitetsgaranti. Hör av dig så åtgärdar vi det."),
             ("Kan jag få RUT-avdrag?", "Ja, du får 50 % RUT-avdrag direkt på fakturan."),
         ],
@@ -195,13 +196,13 @@ SERVICES = [
         "image": "assets/img/hero-fonster-poster.jpg",
         "image_alt": "Fönsterputsning med gul trasa",
         "title": "Fönsterputsning och trädgårdsarbete i Ale",
-        "description": "Nu erbjuder Alvhem Städ även fönsterputsning och trädgårdsarbete i Ale. Kontakta oss för ett upplägg som passar dig.",
+        "description": "Fönsterputsning och trädgårdsarbete i Ale för 299 kr/h inkl. moms efter RUT-avdrag. Nu även hos Alvhem Städ – samma städare och nöjd kund-garanti.",
         "headline": "Fönsterputs & trädgård",
         "lead": "Nyhet hos Alvhem Städ: vi hjälper dig nu även med fönsterputsning och trädgårdsarbete. Hör av dig så berättar vi mer.",
-        "price": "Offert",
-        "price_unit": "",
+        "price": "299 kr",
+        "price_unit": "/timme",
         "price_from": False,
-        "price_note": "Kontakta oss så tar vi fram ett pris som passar ditt hem och din trädgård.",
+        "price_note": "Gäller både fönsterputs och trädgårdsarbete. Inkl. moms, efter 50 % RUT-avdrag.",
         "intro": [
             "Skinande rena fönster gör stor skillnad för hur ett hem känns – mer ljus och en klarare utsikt. Vi putsar fönster i bostäder och lokaler.",
             "Vi hjälper även till med trädgårdsarbete, så att du kan njuta av trädgården i stället för att arbeta i den. Berätta vad du behöver hjälp med så tar vi fram ett förslag.",
@@ -209,7 +210,7 @@ SERVICES = [
         "facts": [
             ("Fönsterputs", "Bostäder och lokaler"),
             ("Trädgård", "Efter dina behov"),
-            ("Pris", "Enligt offert"),
+            ("Pris", "299 kr/h efter RUT"),
             ("Garanti", "Nöjd kund-garanti"),
         ],
         "includes": [
@@ -217,7 +218,8 @@ SERVICES = [
             ("Trädgårdsarbete", ["Gräsklippning", "Rensning av rabatter och gångar", "Häckklippning", "Lövkrattning och bortforsling efter överenskommelse"]),
         ],
         "faq": [
-            ("Vad kostar det?", "Priset beror på antal fönster eller vilka trädgårdssysslor det gäller. Kontakta oss så får du en offert."),
+            ("Vad kostar det?", "Fönsterputsning och trädgårdsarbete kostar 299 kr per timme inklusive moms efter RUT-avdrag."),
+            ("Får jag RUT-avdrag?", "Ja, du får 50 % RUT-avdrag direkt på fakturan. Priset 299 kr/h är efter avdraget."),
             ("Kan jag kombinera med hemstädning?", "Ja, hör av dig så tar vi fram ett upplägg som passar dig."),
         ],
     },
@@ -249,7 +251,7 @@ def business_jsonld():
         "image": SITE_URL + "assets/img/hero-fonster-poster.jpg",
         "telephone": "+46760223990",
         "email": EMAIL,
-        "priceRange": "230–350 kr/h",
+        "priceRange": "249–350 kr/h",
         "currenciesAccepted": "SEK",
         "address": {"@type": "PostalAddress", "streetAddress": "Näckens väg 23", "postalCode": "446 34", "addressLocality": "Älvängen", "addressRegion": "Västra Götalands län", "addressCountry": "SE"},
         "areaServed": [{"@type": "City", "name": "Älvängen"}, {"@type": "AdministrativeArea", "name": "Ale kommun"}],
@@ -563,8 +565,8 @@ def service_page(s):
 """
 
 
-INDEX_TITLE = "Städfirma i Älvängen & Ale – Hemstädning från 230 kr/h | Alvhem Städ"
-INDEX_DESCRIPTION = "Alvhem Städ i Älvängen, Ale: hemstädning 230 kr/h efter RUT, storstädning, flyttstädning och kontorsstädning. Fasta priser, samma städare och nöjd kund-garanti."
+INDEX_TITLE = "Städfirma i Älvängen & Ale – Hemstädning från 249 kr/h | Alvhem Städ"
+INDEX_DESCRIPTION = "Alvhem Städ i Älvängen, Ale: hemstädning 249 kr/h efter RUT, storstädning, flyttstädning och kontorsstädning. Fasta priser, samma städare och nöjd kund-garanti."
 
 
 def index_head():
