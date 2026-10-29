@@ -14,6 +14,13 @@ from datetime import date
 from html import escape
 from pathlib import Path
 
+# Elevate Studio's credit under every footer: the mark and the name, the whole of it one link to elevatestudio.nu.
+ELEVATE_CREDIT = '''<!-- elevate-credit -->
+<style>.elevate-credit{max-width:1240px;margin:24px auto 0;padding:20px 16px 0;border-top:1px solid rgba(128,128,128,.25);display:flex;justify-content:center;box-sizing:border-box}.elevate-credit a{display:inline-flex;align-items:center;gap:8px;padding:8px 0;font:inherit;font-size:13px;line-height:1;color:inherit;opacity:.55;text-decoration:none;transition:opacity .2s}.elevate-credit a:hover,.elevate-credit a:focus-visible{opacity:1}.elevate-credit svg{width:16px;height:16px;flex:none;display:block}@media(min-width:1024px){.elevate-credit a{font-size:14px}}</style>
+<div class="elevate-credit"><a href="https://elevatestudio.nu" target="_blank" rel="noopener"><svg viewBox="0 0 1884.3 1353.9" aria-hidden="true"><path d="M0.0 1353.9 L1218.7 0.0 L1218.7 329.1 L479.7 1136.4 L786.7 1132.4 L1215.5 687.4 L1884.3 1349.9 L1590.1 1349.9 L1218.6 994.7 L865.4 1349.9Z" fill="currentColor"/></svg>Byggd av Elevate Studio</a></div>
+'''
+
+
 ROOT = Path(__file__).resolve().parent.parent
 PHONE = "076 022 39 90"
 PHONE_HREF = "tel:+46760223990"
@@ -416,7 +423,7 @@ def footer():
     <address>Alvhem Städ AB<br>Näckens väg 23, 446 34 Älvängen<br>Telefon: <a href="{PHONE_HREF}">{PHONE}</a><br>Mail: <a href="mailto:{EMAIL}">{EMAIL}</a></address>
   </div>
   <p class="footer__copy">© <span id="year">2026</span> Alvhem Städ AB · Priser för privatpersoner inkl. moms och efter RUT-avdrag</p>
-</footer>"""
+{ELEVATE_CREDIT}</footer>"""
 
 
 CHECK = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
