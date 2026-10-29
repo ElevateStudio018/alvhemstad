@@ -95,5 +95,7 @@
       setTimeout(() => { delete v.dataset.fading; }, 2000);
     }
   }));
+  // Fade the first clip in over the poster image once it actually plays
+  videos[0].addEventListener("playing", () => videos[0].classList.add("is-active"), { once: true });
   play(videos[0]);
 })();

@@ -8,6 +8,9 @@ Kör från projektroten:  python3 tools/build_pages.py
   <!-- HEADER:START --> / <!-- HEADER:END --> och <!-- FOOTER:START --> / <!-- FOOTER:END -->,
   så att alla sidor alltid har samma meny.
 """
+import json
+import re
+from datetime import date
 from html import escape
 from pathlib import Path
 
@@ -15,6 +18,30 @@ ROOT = Path(__file__).resolve().parent.parent
 PHONE = "076 022 39 90"
 PHONE_HREF = "tel:+46760223990"
 EMAIL = "info@alvhemstad.se"
+# Webbplatsens riktiga adress. Används för canonical, sitemap och strukturerad data.
+SITE_URL = "https://www.alvhemstad.se/"
+BUSINESS_ID = SITE_URL + "#foretag"
+
+# Bredder som tools/optimize_images.py skapar för varje bild (assets/img/<namn>-<bredd>.webp)
+IMAGE_WIDTHS = {
+    "hem": [480, 800, 1200, 1400],
+    "stor": [480, 800, 1200, 1400],
+    "flytt": [480, 800, 1200, 1400],
+    "kontor": [480, 800, 1200, 1400],
+    "hero-fonster-poster": [480, 800, 1280],
+}
+
+# Vanliga frågor på startsidan (visas på sidan och som FAQPage-data för Google och AI-sök)
+HOME_FAQ = [
+    ("Vad kostar hemstädning hos Alvhem Städ?", "Hemstädning kostar 230 kr per timme inklusive moms efter RUT-avdrag. Vi har fasta priser, så du vet alltid vad du betalar."),
+    ("Hur fungerar RUT-avdraget?", "Du får 50 % RUT-avdrag direkt på fakturan för hemstädning, storstädning och flyttstädning. Alla priser för privatpersoner anges inklusive moms och efter RUT-avdrag."),
+    ("Vilka tjänster erbjuder ni?", "Hemstädning, storstädning, flyttstädning och kontorsstädning. Vi erbjuder nu även fönsterputsning och trädgårdsarbete."),
+    ("Var finns Alvhem Städ?", "Vi finns på Näckens väg 23 i Älvängen i Ale kommun. Kontakta oss så berättar vi om vi kan hjälpa dig där du bor."),
+    ("Hur kommer jag igång?", "Vi börjar alltid med ett kostnadsfritt uppstartsmöte där vi anpassar städningen efter dina behov. Ring 076 022 39 90 eller mejla info@alvhemstad.se."),
+    ("Får jag samma städare varje gång?", "Ja. Du får samma städare vid alla städtillfällen."),
+    ("Finns det bindningstid?", "Hemstädning på abonnemang har en månads bindningstid. Du kan avboka ett städtillfälle kostnadsfritt senast 2 arbetsdagar i förväg."),
+    ("Ingår rengöringsmedel?", "Vid hemstädning står vi för rengöringsmedel om du vill. Då debiteras 60 kr inklusive moms per städtillfälle."),
+]
 
 SERVICES = [
     {
@@ -196,7 +223,145 @@ SERVICES = [
     },
 ]
 
-NAV = [("Hem", "index.html"), ("Boka nu", "index.html#kontakt"), ("Kontakta oss", "index.html#kontakt")]
+def srcset(stem):
+    return ", ".join(f"assets/img/{stem}-{w}.webp {w}w" for w in IMAGE_WIDTHS[stem])
+
+
+def img_src(stem, max_w=1200):
+    fitting = [w for w in IMAGE_WIDTHS[stem] if w <= max_w]
+    return f"assets/img/{stem}-{(fitting or IMAGE_WIDTHS[stem])[-1]}.webp"
+
+
+def stem_of(service):
+    return Path(service["image"]).stem
+
+
+def business_jsonld():
+    return {
+        "@context": "https://schema.org",
+        "@type": "HouseCleaningService",
+        "@id": BUSINESS_ID,
+        "name": "Alvhem Städ AB",
+        "alternateName": "Alvhem Städ",
+        "description": "Städfirma i Älvängen, Ale kommun. Hemstädning, storstädning, flyttstädning, kontorsstädning, fönsterputsning och trädgårdsarbete med fasta priser och 50 % RUT-avdrag direkt på fakturan.",
+        "url": SITE_URL,
+        "logo": SITE_URL + "assets/img/logo.png",
+        "image": SITE_URL + "assets/img/hero-fonster-poster.jpg",
+        "telephone": "+46760223990",
+        "email": EMAIL,
+        "priceRange": "230–350 kr/h",
+        "currenciesAccepted": "SEK",
+        "address": {"@type": "PostalAddress", "streetAddress": "Näckens väg 23", "postalCode": "446 34", "addressLocality": "Älvängen", "addressRegion": "Västra Götalands län", "addressCountry": "SE"},
+        "areaServed": [{"@type": "City", "name": "Älvängen"}, {"@type": "AdministrativeArea", "name": "Ale kommun"}],
+        "hasMap": "https://www.google.com/maps/dir//N%C3%A4ckens+v%C3%A4g+23,+44634+%C3%84lv%C3%A4ngen",
+        "award": "Certifierad kvalitetspartner 2024",
+        "knowsLanguage": "sv",
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Städtjänster",
+            "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": s["name"], "url": SITE_URL + s["slug"] + ".html"}} for s in SERVICES],
+        },
+    }
+
+
+def faq_jsonld(items):
+    return {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in items],
+    }
+
+
+def price_number(s):
+    return "".join(ch for ch in s["price"] if ch.isdigit())
+
+
+def service_jsonld(s):
+    data = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": s["name"],
+        "serviceType": s["name"],
+        "description": s["description"],
+        "url": SITE_URL + s["slug"] + ".html",
+        "image": SITE_URL + img_src(stem_of(s)),
+        "provider": {"@id": BUSINESS_ID},
+        "areaServed": [{"@type": "City", "name": "Älvängen"}, {"@type": "AdministrativeArea", "name": "Ale kommun"}],
+    }
+    if price_number(s):
+        unit = {"/timme": "HUR", "/kvm": "MTK"}.get(s["price_unit"], "")
+        spec = {"@type": "UnitPriceSpecification", "price": price_number(s), "priceCurrency": "SEK", "description": s["price_note"]}
+        if unit:
+            spec["unitCode"] = unit
+        if s["price_from"]:
+            spec["minPrice"] = price_number(s)
+        data["offers"] = {"@type": "Offer", "priceCurrency": "SEK", "price": price_number(s), "priceSpecification": spec}
+    return data
+
+
+def breadcrumb_jsonld(s):
+    return {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Hem", "item": SITE_URL},
+            {"@type": "ListItem", "position": 2, "name": "Tjänster", "item": SITE_URL + "#tjanster"},
+            {"@type": "ListItem", "position": 3, "name": s["name"], "item": SITE_URL + s["slug"] + ".html"},
+        ],
+    }
+
+
+def website_jsonld():
+    return {"@context": "https://schema.org", "@type": "WebSite", "name": "Alvhem Städ", "url": SITE_URL, "inLanguage": "sv-SE", "publisher": {"@id": BUSINESS_ID}}
+
+
+def inline_css():
+    """styles.css minifierad och inbäddad i sidan, så att ingen CSS-fil blockerar första visningen."""
+    css = (ROOT / "styles.css").read_text(encoding="utf-8")
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    css = re.sub(r"\s+", " ", css)
+    css = re.sub(r"\s*([{};:,>])\s*", r"\1", css)
+    css = css.replace(";}", "}")
+    # url() i CSS:en är relativa till styles.css i roten, vilket är samma som sidorna
+    return css.strip()
+
+
+def head_tags(title, description, path, og_image, jsonld, preloads=""):
+    url = SITE_URL + path
+    scripts = "\n".join(
+        f'  <script type="application/ld+json">{json.dumps(d, ensure_ascii=False, separators=(",", ":"))}</script>' for d in jsonld
+    )
+    return f"""  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{escape(title)}</title>
+  <meta name="description" content="{escape(description)}">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="{url}">
+  <meta name="theme-color" content="#8a4c7d">
+  <meta name="geo.region" content="SE-O">
+  <meta name="geo.placename" content="Älvängen">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="sv_SE">
+  <meta property="og:site_name" content="Alvhem Städ">
+  <meta property="og:title" content="{escape(title)}">
+  <meta property="og:description" content="{escape(description)}">
+  <meta property="og:url" content="{url}">
+  <meta property="og:image" content="{SITE_URL + og_image}">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/fraunces-var-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/source-sans-3-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+{preloads}  <style>{inline_css()}</style>
+{scripts}"""
+
+
+def page_head(*args, **kwargs):
+    return f"""<!doctype html>
+<html lang="sv">
+<head>
+{head_tags(*args, **kwargs)}
+</head>"""
 
 
 def header(active=""):
@@ -205,19 +370,19 @@ def header(active=""):
         for s in SERVICES
     )
     mobile_service_links = "\n".join(f'    <a href="{s["slug"]}.html" class="sub">{escape(s["name"])}</a>' for s in SERVICES)
-    home_active = ' class="is-active"' if active == "index" else ""
+    home_active = ' class="is-active" aria-current="page"' if active == "index" else ""
     services_active = " is-active" if active and active != "index" else ""
     return f"""<header class="header" id="header">
   <div class="header__inner">
     <a href="index.html" class="header__logo" aria-label="Alvhem Städ – till startsidan">
-      <img src="assets/img/logo.png" alt="Alvhem Städ" class="logo-dark" width="640" height="388">
-      <img src="assets/img/logo-light.png" alt="" class="logo-light" width="640" height="388" aria-hidden="true">
+      <img src="assets/img/logo-300.webp" alt="Alvhem Städ" class="logo-dark" width="300" height="182">
+      <img src="assets/img/logo-light-300.webp" alt="" class="logo-light" width="300" height="182">
     </a>
     <nav class="header__nav" aria-label="Huvudmeny">
       <a href="index.html"{home_active}>Hem</a>
       <a href="index.html#kontakt">Boka nu</a>
       <div class="dropdown">
-        <a href="index.html#tjanster" class="dropdown__toggle{services_active}" aria-haspopup="true">Våra tjänster</a>
+        <a href="index.html#tjanster" class="dropdown__toggle{services_active}">Våra tjänster</a>
         <div class="dropdown__menu">
 {service_links}
         </div>
@@ -242,39 +407,33 @@ def footer():
     links = "\n".join(f'      <a href="{s["slug"]}.html">{escape(s["name"])}</a>' for s in SERVICES)
     return f"""<footer class="footer">
   <div class="container footer__grid">
-    <img src="assets/img/logo.png" alt="Alvhem Städ" class="footer__logo" width="640" height="388" loading="lazy">
-    <div class="footer__links">
+    <img src="assets/img/logo-300.webp" alt="Alvhem Städ" class="footer__logo" width="300" height="182" loading="lazy">
+    <nav class="footer__links" aria-label="Tjänster">
 {links}
-    </div>
-    <p>Alvhem Städ AB<br>Näckens väg 23, 446 34 Älvängen<br>Telefon: <a href="{PHONE_HREF}">{PHONE}</a><br>Mail: <a href="mailto:{EMAIL}">{EMAIL}</a></p>
+    </nav>
+    <address>Alvhem Städ AB<br>Näckens väg 23, 446 34 Älvängen<br>Telefon: <a href="{PHONE_HREF}">{PHONE}</a><br>Mail: <a href="mailto:{EMAIL}">{EMAIL}</a></address>
   </div>
   <p class="footer__copy">© <span id="year">2026</span> Alvhem Städ AB · Priser för privatpersoner inkl. moms och efter RUT-avdrag</p>
 </footer>"""
 
 
-def head(title, description):
-    return f"""<!doctype html>
-<html lang="sv">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{escape(title)}</title>
-  <meta name="description" content="{escape(description)}">
-  <meta name="theme-color" content="#ffffff">
-  <link rel="icon" href="assets/img/logo.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Jost:wght@400;500;600&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-</head>"""
-
-
 CHECK = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+
+
+def faq_html(items, open_first=True):
+    return "\n".join(
+        f"""        <details class="faq__item"{" open" if open_first and n == 0 else ""}>
+          <summary>{escape(q)}</summary>
+          <p>{escape(a)}</p>
+        </details>"""
+        for n, (q, a) in enumerate(items)
+    )
 
 
 def service_page(s):
     contact_href = f'index.html?tjanst={s["form_value"]}#kontakt'
     price_from = '<span class="price-from">från</span> ' if s["price_from"] else ""
+    stem = stem_of(s)
     intro = "\n".join(f"          <p>{escape(p)}</p>" for p in s["intro"])
     facts = "\n".join(f"            <div><dt>{escape(k)}</dt><dd>{escape(v)}</dd></div>" for k, v in s["facts"])
     groups = "\n".join(
@@ -286,31 +445,32 @@ def service_page(s):
           </div>"""
         for title, items in s["includes"]
     )
-    faq = "\n".join(
-        f"""        <details class="faq__item"{" open" if n == 0 else ""}>
-          <summary>{escape(q)}</summary>
-          <p>{escape(a)}</p>
-        </details>"""
-        for n, (q, a) in enumerate(s["faq"])
-    )
     others = "\n".join(
         f"""        <a class="other" href="{o["slug"]}.html">
-          <img src="{o["image"]}" alt="" loading="lazy">
+          <img src="{img_src(stem_of(o), 480)}" srcset="{srcset(stem_of(o))}" sizes="(max-width: 560px) 100vw, (max-width: 860px) 50vw, 300px" alt="" width="480" height="360" loading="lazy" decoding="async">
           <span>{escape(o["name"])}</span>
         </a>"""
         for o in SERVICES if o["slug"] != s["slug"]
     )
-    return f"""{head(s["title"], s["description"])}
+    preload = f'  <link rel="preload" as="image" imagesrcset="{srcset(stem)}" imagesizes="100vw" fetchpriority="high">\n'
+    head = page_head(
+        s["title"], s["description"], f'{s["slug"]}.html', s["image"],
+        [business_jsonld(), service_jsonld(s), breadcrumb_jsonld(s), faq_jsonld(s["faq"])],
+        preloads=preload,
+    )
+    return f"""{head}
 <body>
+
+<a class="skip" href="#main">Hoppa till innehållet</a>
 
 {header(active=s["slug"])}
 
-<main>
+<main id="main">
 
   <section class="page-hero">
-    <img class="page-hero__bg" src="{s["image"]}" alt="">
+    <img class="page-hero__bg" src="{img_src(stem)}" srcset="{srcset(stem)}" sizes="100vw" alt="{escape(s["image_alt"])}" width="1200" height="900" fetchpriority="high" decoding="async">
     <div class="container page-hero__content">
-      <nav class="crumbs" aria-label="Brödsmulor"><a href="index.html">Hem</a><span>/</span><a href="index.html#tjanster">Tjänster</a><span>/</span><span aria-current="page">{escape(s["name"])}</span></nav>
+      <nav class="crumbs" aria-label="Brödsmulor"><a href="index.html">Hem</a><span aria-hidden="true">/</span><a href="index.html#tjanster">Tjänster</a><span aria-hidden="true">/</span><span aria-current="page">{escape(s["name"])}</span></nav>
       <h1 class="display">{escape(s["headline"])}</h1>
       <p class="page-hero__lead">{escape(s["lead"])}</p>
       <div class="page-hero__actions">
@@ -323,7 +483,7 @@ def service_page(s):
   <section class="svc-intro">
     <div class="container svc-intro__grid">
       <div class="svc-intro__text">
-        <p class="kicker">{escape(s["name"])}</p>
+        <p class="kicker">{escape(s["name"])} i Ale</p>
         <h2 class="h2">Så funkar det</h2>
 {intro}
         <dl class="facts">
@@ -358,18 +518,18 @@ def service_page(s):
     <div class="container">
       <h2 class="h2">Tre steg till ett rent hem</h2>
       <ol class="steps__list">
-        <li><span class="steps__num">01</span><h3>Kontakta oss</h3><p>Ring, mejla eller fyll i formuläret så hör vi av oss.</p></li>
-        <li><span class="steps__num">02</span><h3>Uppstartsmöte</h3><p>Vi går igenom dina behov – helt kostnadsfritt.</p></li>
-        <li><span class="steps__num">03</span><h3>Vi städar</h3><p>Samma städare, fast pris och RUT direkt på fakturan.</p></li>
+        <li><span class="steps__num" aria-hidden="true">01</span><h3>Kontakta oss</h3><p>Ring, mejla eller fyll i formuläret så hör vi av oss.</p></li>
+        <li><span class="steps__num" aria-hidden="true">02</span><h3>Uppstartsmöte</h3><p>Vi går igenom dina behov – helt kostnadsfritt.</p></li>
+        <li><span class="steps__num" aria-hidden="true">03</span><h3>Vi städar</h3><p>Samma städare, fast pris och RUT direkt på fakturan.</p></li>
       </ol>
     </div>
   </section>
 
   <section class="svc-faq">
     <div class="container svc-faq__grid">
-      <h2 class="h2">Vanliga frågor</h2>
+      <h2 class="h2">Vanliga frågor om {escape(s["name"].lower())}</h2>
       <div class="faq">
-{faq}
+{faq_html(s["faq"])}
       </div>
     </div>
   </section>
@@ -388,7 +548,7 @@ def service_page(s):
       <h2 class="display display--sm">Redo för ett skinande rent hem?</h2>
       <div class="cta-band__actions">
         <a href="{contact_href}" class="btn btn--white">Boka uppstartsmöte</a>
-        <a href="{PHONE_HREF}" class="btn btn--outline">{PHONE}</a>
+        <a href="{PHONE_HREF}" class="btn btn--outline">Ring {PHONE}</a>
       </div>
     </div>
   </section>
@@ -401,6 +561,77 @@ def service_page(s):
 </body>
 </html>
 """
+
+
+INDEX_TITLE = "Städfirma i Älvängen & Ale – Hemstädning från 230 kr/h | Alvhem Städ"
+INDEX_DESCRIPTION = "Alvhem Städ i Älvängen, Ale: hemstädning 230 kr/h efter RUT, storstädning, flyttstädning och kontorsstädning. Fasta priser, samma städare och nöjd kund-garanti."
+
+
+def index_head():
+    preloads = (
+        '  <link rel="preload" as="image" href="assets/img/hero-fonster-poster-mobil.webp" media="(max-width: 860px)" fetchpriority="high">\n'
+        '  <link rel="preload" as="image" href="assets/img/hero-fonster-poster-1280.webp" media="(min-width: 861px)" fetchpriority="high">\n'
+    )
+    return head_tags(INDEX_TITLE, INDEX_DESCRIPTION, "", "assets/img/hero-fonster-poster.jpg",
+                     [business_jsonld(), website_jsonld(), faq_jsonld(HOME_FAQ)], preloads=preloads)
+
+
+def sitemap():
+    today = date.today().isoformat()
+    urls = [("", "1.0")] + [(s["slug"] + ".html", "0.8") for s in SERVICES]
+    rows = "\n".join(f"  <url><loc>{SITE_URL}{u}</loc><lastmod>{today}</lastmod><priority>{p}</priority></url>" for u, p in urls)
+    return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{rows}\n</urlset>\n'
+
+
+def robots():
+    return f"""User-agent: *
+Allow: /
+
+# AI-sökmotorer och assistenter är välkomna
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: {SITE_URL}sitemap.xml
+"""
+
+
+def llms_txt():
+    lines = [
+        "# Alvhem Städ AB",
+        "",
+        "> Städfirma i Älvängen, Ale kommun. Hemstädning, storstädning, flyttstädning, kontorsstädning, fönsterputsning och trädgårdsarbete. Fasta priser, samma städare vid varje tillfälle, nöjd kund-garanti och 50 % RUT-avdrag direkt på fakturan.",
+        "",
+        "## Kontakt",
+        f"- Telefon: {PHONE}",
+        f"- E-post: {EMAIL}",
+        "- Adress: Näckens väg 23, 446 34 Älvängen",
+        "- Första steget: kostnadsfritt uppstartsmöte",
+        "",
+        "## Tjänster och priser (privatpersoner, inkl. moms efter RUT)",
+    ]
+    for s in SERVICES:
+        price = ("från " if s["price_from"] else "") + s["price"] + s["price_unit"]
+        lines.append(f'- [{s["name"]}]({SITE_URL}{s["slug"]}.html): {price}. {s["price_note"]}')
+    lines += ["", "## Vanliga frågor"]
+    lines += [f"- {q} {a}" for q, a in HOME_FAQ]
+    lines += ["", "## Villkor",
+              "- Hemstädning på abonnemang: en månads bindningstid.",
+              "- Rengöringsmedel vid hemstädning: 60 kr inkl. moms per tillfälle (valfritt).",
+              "- Avbokning: kostnadsfritt senast 2 arbetsdagar i förväg.",
+              "- Certifierad kvalitetspartner 2024.", ""]
+    return "\n".join(lines)
 
 
 def replace_between(text, start, end, new):
@@ -416,10 +647,17 @@ def main():
 
     index = ROOT / "index.html"
     text = index.read_text(encoding="utf-8")
+    text = replace_between(text, "<!-- HEAD:START -->", "<!-- HEAD:END -->", index_head())
     text = replace_between(text, "<!-- HEADER:START -->", "<!-- HEADER:END -->", header(active="index"))
+    text = replace_between(text, "<!-- FAQ:START -->", "<!-- FAQ:END -->", faq_html(HOME_FAQ))
     text = replace_between(text, "<!-- FOOTER:START -->", "<!-- FOOTER:END -->", footer())
     index.write_text(text, encoding="utf-8")
-    print("uppdaterade index.html (meny och sidfot)")
+    print("uppdaterade index.html")
+
+    (ROOT / "sitemap.xml").write_text(sitemap(), encoding="utf-8")
+    (ROOT / "robots.txt").write_text(robots(), encoding="utf-8")
+    (ROOT / "llms.txt").write_text(llms_txt(), encoding="utf-8")
+    print("skrev sitemap.xml, robots.txt, llms.txt")
 
 
 if __name__ == "__main__":
