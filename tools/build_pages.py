@@ -35,6 +35,7 @@ IMAGE_WIDTHS = {
     "stor": [480, 800, 1200, 1400],
     "flytt": [480, 800, 1200, 1400],
     "kontor": [480, 800, 1200, 1400],
+    "tradgard": [480, 800, 1200, 1400],
     "hero-fonster-poster": [480, 800, 1280],
 }
 
@@ -43,11 +44,12 @@ HOME_FAQ = [
     ("Vad kostar hemstädning hos Alvhem Städ?", "Hemstädning kostar 230 kr per timme inklusive moms efter RUT-avdrag. Vi har fasta priser, så du vet alltid vad du betalar."),
     ("Hur fungerar RUT-avdraget?", "Du får 50 % RUT-avdrag direkt på fakturan för hemstädning, storstädning och flyttstädning. Alla priser för privatpersoner anges inklusive moms och efter RUT-avdrag."),
     ("Vilka tjänster erbjuder ni?", "Hemstädning, storstädning, flyttstädning och kontorsstädning. Vi erbjuder nu även fönsterputsning och trädgårdsarbete."),
-    ("Var finns Alvhem Städ?", "Vi finns på Näckens väg 23 i Älvängen i Ale kommun. Kontakta oss så berättar vi om vi kan hjälpa dig där du bor."),
+    ("Vad kostar fönsterputs och trädgårdsarbete?", "Fönsterputs kostar 299 kr efter RUT-avdrag. Trädgårdsarbete kostar 299 kr efter RUT-avdrag."),
+    ("Var finns Alvhem Städ?", "Vi finns på Älvvägen 13 i Älvängen i Ale kommun. Kontakta oss så berättar vi om vi kan hjälpa dig där du bor."),
     ("Hur kommer jag igång?", "Vi börjar alltid med ett kostnadsfritt uppstartsmöte där vi anpassar städningen efter dina behov. Ring 076 022 39 90 eller mejla info@alvhemstad.se."),
     ("Får jag samma städare varje gång?", "Ja. Du får samma städare vid alla städtillfällen."),
     ("Finns det bindningstid?", "Hemstädning på abonnemang har en månads bindningstid. Du kan avboka ett städtillfälle kostnadsfritt senast 2 arbetsdagar i förväg."),
-    ("Ingår rengöringsmedel?", "Vid hemstädning står vi för rengöringsmedel om du vill. Då debiteras 60 kr inklusive moms per städtillfälle."),
+    ("Ingår rengöringsmedel?", "Vid hemstädning står vi för rengöringsmedel om du vill. Då debiteras 60 kr inklusive moms per städtillfälle i privathem."),
 ]
 
 SERVICES = [
@@ -205,10 +207,10 @@ SERVICES = [
         "description": "Nu erbjuder Alvhem Städ även fönsterputsning och trädgårdsarbete i Ale. Kontakta oss för ett upplägg som passar dig.",
         "headline": "Fönsterputs & trädgård",
         "lead": "Nyhet hos Alvhem Städ: vi hjälper dig nu även med fönsterputsning och trädgårdsarbete. Hör av dig så berättar vi mer.",
-        "price": "Offert",
+        "price": "299 kr",
         "price_unit": "",
         "price_from": False,
-        "price_note": "Kontakta oss så tar vi fram ett pris som passar ditt hem och din trädgård.",
+        "price_note": "Efter RUT-avdrag. Gäller både fönsterputs och trädgårdsarbete.",
         "intro": [
             "Skinande rena fönster gör stor skillnad för hur ett hem känns – mer ljus och en klarare utsikt. Vi putsar fönster i bostäder och lokaler.",
             "Vi hjälper även till med trädgårdsarbete, så att du kan njuta av trädgården i stället för att arbeta i den. Berätta vad du behöver hjälp med så tar vi fram ett förslag.",
@@ -216,7 +218,7 @@ SERVICES = [
         "facts": [
             ("Fönsterputs", "Bostäder och lokaler"),
             ("Trädgård", "Efter dina behov"),
-            ("Pris", "Enligt offert"),
+            ("Pris", "299 kr efter RUT-avdrag"),
             ("Garanti", "Nöjd kund-garanti"),
         ],
         "includes": [
@@ -224,7 +226,7 @@ SERVICES = [
             ("Trädgårdsarbete", ["Gräsklippning", "Rensning av rabatter och gångar", "Häckklippning", "Lövkrattning och bortforsling efter överenskommelse"]),
         ],
         "faq": [
-            ("Vad kostar det?", "Priset beror på antal fönster eller vilka trädgårdssysslor det gäller. Kontakta oss så får du en offert."),
+            ("Vad kostar det?", "Fönsterputs kostar 299 kr efter RUT-avdrag. Trädgårdsarbete kostar 299 kr efter RUT-avdrag."),
             ("Kan jag kombinera med hemstädning?", "Ja, hör av dig så tar vi fram ett upplägg som passar dig."),
         ],
     },
@@ -258,9 +260,9 @@ def business_jsonld():
         "email": EMAIL,
         "priceRange": "230–350 kr/h",
         "currenciesAccepted": "SEK",
-        "address": {"@type": "PostalAddress", "streetAddress": "Näckens väg 23", "postalCode": "446 34", "addressLocality": "Älvängen", "addressRegion": "Västra Götalands län", "addressCountry": "SE"},
+        "address": {"@type": "PostalAddress", "streetAddress": "Älvvägen 13", "postalCode": "446 37", "addressLocality": "Älvängen", "addressRegion": "Västra Götalands län", "addressCountry": "SE"},
         "areaServed": [{"@type": "City", "name": "Älvängen"}, {"@type": "AdministrativeArea", "name": "Ale kommun"}],
-        "hasMap": "https://www.google.com/maps/dir//N%C3%A4ckens+v%C3%A4g+23,+44634+%C3%84lv%C3%A4ngen",
+        "hasMap": "https://www.google.com/maps/dir//%C3%84lvv%C3%A4gen+13,+44637+%C3%84lv%C3%A4ngen",
         "award": "Certifierad kvalitetspartner 2024",
         "knowsLanguage": "sv",
         "hasOfferCatalog": {
@@ -418,7 +420,7 @@ def footer():
     <nav class="footer__links" aria-label="Tjänster">
 {links}
     </nav>
-    <address>Alvhem Städ AB<br>Näckens väg 23, 446 34 Älvängen<br>Telefon: <a href="{PHONE_HREF}">{PHONE}</a><br>Mail: <a href="mailto:{EMAIL}">{EMAIL}</a></address>
+    <address>Alvhem Städ AB<br>Älvvägen 13, 446 37 Älvängen<br>Telefon: <a href="{PHONE_HREF}">{PHONE}</a><br>Mail: <a href="mailto:{EMAIL}">{EMAIL}</a></address>
   </div>
   <p class="footer__copy">© <span id="year">2026</span> Alvhem Städ AB · Priser för privatpersoner inkl. moms och efter RUT-avdrag</p>
 {ELEVATE_CREDIT}</footer>"""
@@ -623,7 +625,7 @@ def llms_txt():
         "## Kontakt",
         f"- Telefon: {PHONE}",
         f"- E-post: {EMAIL}",
-        "- Adress: Näckens väg 23, 446 34 Älvängen",
+        "- Adress: Älvvägen 13, 446 37 Älvängen",
         "- Första steget: kostnadsfritt uppstartsmöte",
         "",
         "## Tjänster och priser (privatpersoner, inkl. moms efter RUT)",
@@ -635,7 +637,7 @@ def llms_txt():
     lines += [f"- {q} {a}" for q, a in HOME_FAQ]
     lines += ["", "## Villkor",
               "- Hemstädning på abonnemang: en månads bindningstid.",
-              "- Rengöringsmedel vid hemstädning: 60 kr inkl. moms per tillfälle (valfritt).",
+              "- Rengöringsmedel vid hemstädning: ingår om kunden önskar, 60 kr inkl. moms per städtillfälle i privathem.",
               "- Avbokning: kostnadsfritt senast 2 arbetsdagar i förväg.",
               "- Certifierad kvalitetspartner 2024.", ""]
     return "\n".join(lines)

@@ -49,8 +49,10 @@
     const body = [
       "Namn: " + d.get("namn"),
       "E-post: " + d.get("epost"),
+      "Adress: " + (d.get("adress") || "-"),
       "Telefon: " + (d.get("telefon") || "-"),
       "Typ av städning: " + d.get("typ"),
+      "Yta (m²): " + (d.get("yta") || "-"),
       "",
       d.get("meddelande") || "",
     ].join("\n");

@@ -16,6 +16,7 @@ JOBS = {
     "stor.jpg": [480, 800, 1200, 1400],
     "flytt.jpg": [480, 800, 1200, 1400],
     "kontor.jpg": [480, 800, 1200, 1400],
+    "tradgard.jpg": [480, 800, 1200, 1400],
     "hero-fonster-poster.jpg": [480, 800, 1280],
     "hero-torka-poster.jpg": [1280],
     "logo.png": [300],
